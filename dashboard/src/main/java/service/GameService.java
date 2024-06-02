@@ -3,7 +3,9 @@ package service;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.subscription.MultiEmitter;
+import io.smallrye.mutiny.tuples.Tuple2;
 import io.smallrye.mutiny.unchecked.Unchecked;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import model.GameEvent;
@@ -14,6 +16,7 @@ import utils.NamesUtil;
 import java.nio.ByteBuffer;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Comparator;
@@ -25,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 import static io.smallrye.mutiny.helpers.Subscriptions.complete;
 import static java.util.Comparator.comparing;
@@ -77,6 +81,9 @@ public class GameService {
     @ConfigProperty(name = "game.max-duration", defaultValue = "90")
     public int maxDuration;
 
+    @Inject
+    ScoreService scoreService;
+
     public void start() {
         rank.set(null);
         noBodyMoveStart.set(null);
@@ -103,6 +110,9 @@ public class GameService {
                             }
                             return l;
                         });
+                        if (prev == null) {
+                            scoreService.persistRank(rank(), currentGameId);
+                        }
                         if (prev == null || t > next.get()) {
                             emitRank();
                             next.set(5 + t);
