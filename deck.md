@@ -21,7 +21,7 @@ theme: quarkus
 
 - Principal Software engineer, Red Hat
 - Quarkus team for 5 years
-- Lead of Quarkus's web initiatives
+- Lead of the Quarkus Web team
 - `@ia3andy`
 
 ---
@@ -45,7 +45,8 @@ theme: quarkus
 
 ### What can we create with Quarkus?
 
-- Cloud-Native, Serverless, Micro-Services, Lambdas, Command-Lines…
+- Cloud-Native, Serverless, Micro-Services, Command-Lines…
+- Monolith 👻
 - And Web Applications!
 
 ---
@@ -57,6 +58,23 @@ theme: quarkus
 --
 
 ![](deck-assets/one-two-three-quarkus.png)<!-- .element width="100%"  -->
+
+---
+
+### One game isn't fair...
+
+- Let's add a database
+- Average the results through multiple games
+
+--
+
+```java
+System.out.println("""
+    ```java
+      System.out.println("How about coding now? 🤓");
+    ```
+""");
+```
 
 ---
 
@@ -76,8 +94,6 @@ theme: quarkus
 
 ---
 
-### One game isn't fair...
+![](deck-assets/qr-code.png)<!-- .element width="60%"  -->
 
-- Let's add a database
-- Average the results through multiple games
-
+[red.ht/one-two-three-quarkus](red.ht/one-two-three-quarkus)

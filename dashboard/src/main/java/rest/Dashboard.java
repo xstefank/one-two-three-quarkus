@@ -4,7 +4,6 @@ import io.quarkiverse.renarde.htmx.HxController;
 import io.quarkus.logging.Log;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
-import io.smallrye.common.annotation.NonBlocking;
 import io.smallrye.mutiny.Multi;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
@@ -18,6 +17,7 @@ import model.GameEvent;
 import model.GameEvent.GameEventType;
 import org.jboss.resteasy.reactive.RestStreamElementType;
 import service.GameService;
+import service.ScoreService;
 
 import java.time.Duration;
 import java.util.List;
@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 public class Dashboard extends HxController {
 
     @Inject GameService gameService;
+    @Inject ScoreService scoreService;
 
     @CheckedTemplate
     public static class Templates {
@@ -43,6 +44,10 @@ public class Dashboard extends HxController {
         public static native TemplateInstance board();
 
         public static native TemplateInstance controls();
+
+        public static native TemplateInstance leaderboard(List<ScoreService.ScoreAverage> averageScores);
+        public static native TemplateInstance leaderboard$main(List<ScoreService.ScoreAverage> averageScores);
+
     }
 
     @Path("/")
@@ -51,6 +56,13 @@ public class Dashboard extends HxController {
             return Templates.index$game();
         }
         return Templates.index();
+    }
+
+    public TemplateInstance leaderboard() {
+        if(isHxRequest()) {
+            return Templates.leaderboard$main(scoreService.calculateScoreAverages());
+        }
+        return Templates.leaderboard(scoreService.calculateScoreAverages());
     }
 
     public TemplateInstance controls() {

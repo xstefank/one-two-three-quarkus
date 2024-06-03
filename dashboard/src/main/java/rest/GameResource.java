@@ -9,6 +9,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import model.GameEvent;
 import model.GameEvent.GameEventType;
 import model.GameState;
 import model.GameState.GameStatus;
@@ -17,7 +18,6 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestStreamElementType;
 import service.GameService;
-import model.GameEvent;
 import service.GameService.Runner;
 
 import java.util.HashMap;
@@ -121,5 +121,6 @@ public class GameResource {
                 .filter(g -> RUNNER_EVENTS.contains(g.type()))
                 .filter(g -> g.forRunner(runnerId));
     }
+    
 
 }
