@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Named("scoreService")
 public class ScoreService {
 
-    @Transactional
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void persistRank(List<GameService.Runner> rank) {
         if (rank == null || rank.isEmpty()) {
             return;
