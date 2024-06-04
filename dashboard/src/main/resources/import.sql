@@ -1,0 +1,1 @@
+INSERT INTO game(id, datetime) VALUES (2, '2024-06-04 06:54:33.649004');
